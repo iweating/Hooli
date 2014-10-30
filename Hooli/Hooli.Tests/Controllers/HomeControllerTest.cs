@@ -5,9 +5,9 @@ using System.Text;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hooli;
-using Hooli.Controllers;
+using Hooli.Web.Controllers;
 
-namespace Hooli.Tests.Controllers
+namespace Hooli.Web.Tests.Controllers
 {
     [TestClass]
     public class HomeControllerTest
