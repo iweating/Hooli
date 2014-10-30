@@ -123,9 +123,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hooli\Hooli.csproj">
+    <ProjectReference Include="..\Hooli\Hooli.Web.csproj">
       <Project>{DAA85ACE-F8B8-4070-8A81-161D717EA853}</Project>
-      <Name>Hooli</Name>
+      <Name>Hooli.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
