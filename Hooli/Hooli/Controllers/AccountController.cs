@@ -8,10 +8,10 @@ using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
-using Hooli.Web.Filters;
-using Hooli.Web.Models;
+using Hooli.Filters;
+using Hooli.Models;
 
-namespace Hooli.Web.Controllers
+namespace Hooli.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]

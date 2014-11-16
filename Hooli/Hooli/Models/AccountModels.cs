@@ -6,7 +6,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
 
-namespace Hooli.Web.Models
+namespace Hooli.Models
 {
     public class UsersContext : DbContext
     {
