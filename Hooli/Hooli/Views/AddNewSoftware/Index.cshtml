@@ -4,6 +4,8 @@
 
 <h2>Add New Software</h2>
 
+@model Hooli.Models.Software
+
 @using(Html.BeginForm("Save", "AddNewSoftware", FormMethod.Post, new {enctype = "multipart/form-data"}))
 {
     <table>
@@ -13,9 +15,22 @@
             </td>
         </tr>
         <tr>
+            <td>
+                <fieldset>
+                    <ol>
+                        <li>
+                            @Html.LabelFor(m => m.description)
+                            @Html.TextBoxFor(m => m.description)
+                        </li>
+                    </ol>
+                </fieldset>
+            </td>
+        </tr>
+        <tr>
             <td colspan="2">
                 <input type="submit" name="Submit" value="Submit" />
             </td>
         </tr>
     </table>
+
 }
