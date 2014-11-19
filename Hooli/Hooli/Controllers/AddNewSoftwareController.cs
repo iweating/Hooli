@@ -34,21 +34,20 @@ namespace Hooli.Controllers
                     file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
                     //Way to convert byte array to string
                     System.Diagnostics.Debug.WriteLine(System.Text.Encoding.Default.GetString(fileBytes));
+                   
                     
                     //Construct query 
-                    int id = 1;
+                    int id = Convert.ToInt32(model.id);
                     int admin_id = 1;
                     string name = model.name;
                     string version = model.version;
-                    string date = DateTime.Now.ToShortDateString();
+                    string date = DateTime.Now.ToString("yyyy-MM-dd");
                     string description = model.description;
                     string download = "LINK";
                     string data = System.Text.Encoding.Default.GetString(fileBytes);
                     string query = "insert into Software values (" + id + ", " + admin_id 
                         + ", \"" + name + "\", \"" + version + "\", \"" + date + "\", \"" + description 
                         + "\", \"" + download + "\", \"" + data + "\");";
-
-                    System.Diagnostics.Debug.WriteLine(query);
                     //Save data to db
                     DBConnect db = new DBConnect();
                     db.Insert(query);
