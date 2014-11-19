@@ -27,6 +27,13 @@
                 @Html.LabelFor(m => m.ConfirmPassword)
                 @Html.PasswordFor(m => m.ConfirmPassword)
             </li>
+            <li>
+                @Html.LabelFor(m => m.Role)
+                <select name="Role">
+                    <option value="User">User</option>
+                    <option value="Admin">Admin</option>
+                </select>
+            </li>
         </ol>
         <input type="submit" value="Register" />
     </fieldset>

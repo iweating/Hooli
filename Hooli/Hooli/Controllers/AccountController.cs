@@ -81,6 +81,7 @@ namespace Hooli.Controllers
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     WebSecurity.Login(model.UserName, model.Password);
+                    Roles.AddUserToRole(model.UserName, model.Role);
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
