@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Hooli.Models;
+using Hooli.MySql;
 
 namespace Hooli.Controllers
 {
@@ -16,19 +18,40 @@ namespace Hooli.Controllers
             return View();
         }
 
-        public ActionResult Save(FormCollection formCollection)
+        public ActionResult Save(FormCollection formCollection, SoftwareModel model)
         {
+            
             if(Request != null)
             {
-                HttpPostedFileBase file = Request.Files["UploadedFile"];
-
+                HttpPostedFileBase file = Request.Files["Uploaded File"];
+                //Uses User.Identity.Name to find who's logged in-- look up in database
+                System.Diagnostics.Debug.WriteLine(User.Identity.Name);
                 if((file!=null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
                 {
                     string fileName = file.FileName;
                     string fileContentType = file.ContentType;
                     byte[] fileBytes = new byte[file.ContentLength];
                     file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
-                    //code for saving data to filesystem
+                    //Way to convert byte array to string
+                    System.Diagnostics.Debug.WriteLine(System.Text.Encoding.Default.GetString(fileBytes));
+                    
+                    //Construct query 
+                    int id = 1;
+                    int admin_id = 1;
+                    string name = model.name;
+                    string version = model.version;
+                    string date = DateTime.Now.ToShortDateString();
+                    string description = model.description;
+                    string download = "LINK";
+                    string data = System.Text.Encoding.Default.GetString(fileBytes);
+                    string query = "insert into Software values (" + id + ", " + admin_id 
+                        + ", \"" + name + "\", \"" + version + "\", \"" + date + "\", \"" + description 
+                        + "\", \"" + download + "\", \"" + data + "\");";
+
+                    System.Diagnostics.Debug.WriteLine(query);
+                    //Save data to db
+                    DBConnect db = new DBConnect();
+                    db.Insert(query);
                 }
             }
             return View("Index");

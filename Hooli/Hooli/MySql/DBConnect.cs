@@ -65,7 +65,7 @@ namespace Hooli.MySql
             {
                 //create command and assign the query and connection from the constructor
                 MySqlCommand cmd = new MySqlCommand(query, connection);
-
+                
                 //Execute command
                 cmd.ExecuteNonQuery();
 

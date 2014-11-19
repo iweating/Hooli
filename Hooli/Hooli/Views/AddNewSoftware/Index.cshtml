@@ -1,10 +1,10 @@
-﻿@{
+﻿@model Hooli.Models.SoftwareModel
+
+@{
     ViewBag.Title = "Index";
 }
 
 <h2>Add New Software</h2>
-
-@model Hooli.Models.Software
 
 @using(Html.BeginForm("Save", "AddNewSoftware", FormMethod.Post, new {enctype = "multipart/form-data"}))
 {
@@ -16,8 +16,17 @@
         </tr>
         <tr>
             <td>
+                <a href="~/Models/Test_SoftwareModel.cs">~/Models/Test_SoftwareModel.cs</a>
                 <fieldset>
                     <ol>
+                        <li>
+                            @Html.LabelFor(m => m.name)
+                            @Html.TextBoxFor(m => m.name)
+                        </li>
+                        <li>
+                            @Html.LabelFor(m => m.version)
+                            @Html.TextBoxFor(m => m.version)
+                        </li>
                         <li>
                             @Html.LabelFor(m => m.description)
                             @Html.TextBoxFor(m => m.description)
