@@ -13,6 +13,7 @@ namespace Hooli.Controllers
         //
         // GET: /AddNewSoftware/
 
+        [Authorize(Roles="Admin")]
         public ActionResult Index()
         {
             return View();
