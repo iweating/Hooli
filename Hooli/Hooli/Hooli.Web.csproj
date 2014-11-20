@@ -119,6 +119,7 @@
     </Reference>
     <Reference Include="WebConfigRoleProvider.Core">
       <HintPath>..\..\..\..\..\Downloads\WebConfigRoleProvider.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
