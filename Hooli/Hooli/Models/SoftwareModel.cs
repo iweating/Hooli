@@ -19,6 +19,7 @@ namespace Hooli.Models
         [Display(Name = "Description")]
         public string description { get; set; }
         public string data { get; set; }
+        public string contentType { get; set; }
         //public int downloads { get; set; }
     }
 }
