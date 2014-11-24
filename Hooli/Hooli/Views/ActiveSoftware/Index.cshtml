@@ -1,5 +1,32 @@
-﻿@{
+﻿@using Hooli.MySql;
+@using System.Data;
+@{
     ViewBag.Title = "Index";
 }
 
 <h2>Active Software</h2>
+@{
+    DBConnect db = new DBConnect();
+    string selectQueryString = "select * from Software";
+}
+<html>
+<body>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Date Added</th>
+            <th>Description</th>
+            <th>Download</th>
+        </tr>
+        @foreach(DataRow row in db.GetData(selectQueryString).Rows)
+          {
+              <tr>
+                  <td>@row["softwareName"]</td>
+                  <td>@row["date_added"]</td>
+                  <td>@row["description"]</td>
+                  <td>Click Here</td>
+              </tr>
+          }
+    </table>
+</body>
+</html>

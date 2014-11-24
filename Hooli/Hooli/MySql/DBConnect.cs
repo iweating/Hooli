@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
 using MySql.Data.MySqlClient;
 
 namespace Hooli.MySql
@@ -95,6 +96,30 @@ namespace Hooli.MySql
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 cmd.ExecuteNonQuery();
+                this.CloseConnection();
+            }
+        }
+
+        public DataTable GetData(string query)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                this.OpenConnection();
+                //create command and assign the query and connection from the constructor
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                dt.Load(cmd.ExecuteReader());
+
+                return dt;
+            }
+            catch
+            {
+                System.Diagnostics.Debug.WriteLine("NO DB CXN FOUND");
+                return null;
+            }
+            finally
+            {
+                //close connection
                 this.CloseConnection();
             }
         }
