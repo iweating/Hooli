@@ -25,7 +25,7 @@
                   <td>@row["softwareName"]</td>
                   <td>@row["date_added"]</td>
                   <td>@row["description"]</td>
-                  <td>@Html.ActionLink("Download", "Download", "ActiveSoftware", new { id = 1 }, null)
+                  <td>@Html.ActionLink("Download", "Download", "ActiveSoftware", new { id = row["id"] }, null)
               </tr>
           }
     </table>

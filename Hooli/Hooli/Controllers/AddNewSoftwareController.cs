@@ -35,9 +35,6 @@ namespace Hooli.Controllers
                     string fileName = file.FileName;
                     string fileContentType = file.ContentType;
 
-                    //Get rid of later
-                    fileContentType = "temp";
-
                     BinaryReader br = new BinaryReader(file.InputStream);
                     Byte[] fileBytes = br.ReadBytes(file.ContentLength);
                     br.Close();                    
