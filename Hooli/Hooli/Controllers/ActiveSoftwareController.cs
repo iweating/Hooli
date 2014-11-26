@@ -44,6 +44,20 @@ namespace Hooli.Controllers
                 db.GetConnection().Close();
             }
         }
+        //Need to have alert saying "Are you sure??" 
+        public ActionResult Delete()
+        {
+            string query = "Delete from Software where id = @softwareId";
+            DBConnect db = new DBConnect();
+            using (var cmd = new MySqlCommand(query, db.GetConnection()))
+            {
+                db.GetConnection().Open();
+                cmd.Parameters.Add("@softwareId", MySqlDbType.String).Value = (string)RouteData.Values["id"];
+                cmd.ExecuteNonQuery();
+                db.GetConnection().Close();
+            }
+            return View("Index");
+        }
 
     }
 }

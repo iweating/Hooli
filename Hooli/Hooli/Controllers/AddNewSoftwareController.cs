@@ -27,7 +27,7 @@ namespace Hooli.Controllers
             {
                 HttpPostedFileBase file = Request.Files["Uploaded File"];
 
-                //Uses User.Identity.Name to find who's logged in-- look up in database
+                //Uses User.Identity.Name to find who's logged in-- should be used to find adminId
                 System.Diagnostics.Debug.WriteLine(User.Identity.Name);
 
                 if((file!=null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
@@ -45,7 +45,6 @@ namespace Hooli.Controllers
                     string version = model.version;
                     string date = DateTime.Now.ToString("yyyy-MM-dd");
                     string description = model.description;
-
                     string query = "insert into Software(admin_id, softwareName, fileName, version, date_added, description, data, contentType) values ("
                         + admin_id + ", \"" + softwareName + "\", \"" + fileName + "\", \"" + version + "\", \"" + date + "\", \"" + description + 
                         "\", @data, \"" + fileContentType + "\");";

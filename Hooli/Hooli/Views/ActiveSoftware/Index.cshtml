@@ -18,6 +18,7 @@
             <th>Date Added</th>
             <th>Description</th>
             <th>Download</th>
+            <th>Delete</th>
         </tr>
         @foreach(DataRow row in db.GetData(selectQueryString).Rows)
           {
@@ -25,7 +26,9 @@
                   <td>@row["softwareName"]</td>
                   <td>@row["date_added"]</td>
                   <td>@row["description"]</td>
-                  <td>@Html.ActionLink("Download", "Download", "ActiveSoftware", new { id = row["id"] }, null)
+                  <td>@Html.ActionLink("Download", "Download", "ActiveSoftware", new { id = row["id"] }, null)</td>
+                  <td>@Html.ActionLink("Delete", "Delete", "ActiveSoftware", new { id = row["id"] }, null)</td>
+                  <!--<td><input type="button" value="Delete" onclick="location.href='@Url.Action("Delete", "ActiveSoftware")'" /></td>-->
               </tr>
           }
     </table>
