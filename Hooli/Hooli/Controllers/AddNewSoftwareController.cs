@@ -40,23 +40,28 @@ namespace Hooli.Controllers
 
                     BinaryReader br = new BinaryReader(file.InputStream);
                     Byte[] fileBytes = br.ReadBytes(file.ContentLength);
-                    br.Close();
-                   
+                    br.Close();                    
+
                     //Construct query 
                     int admin_id = 1;
                     string softwareName = model.softwareName;
                     string version = model.version;
                     string date = DateTime.Now.ToString("yyyy-MM-dd");
                     string description = model.description;
-                    
-                    string query = "insert into Software(admin_id, softwareName, fileName, version, date_added, description, data, contentType) values (" 
-                        + admin_id + ", \"" + softwareName + "\", \"" + fileName + "\", \"" + version + "\", \"" + date + "\", \"" + description + "\", \"" 
-                        + fileBytes + "\", \"" + fileContentType + "\");";
 
-                    System.Diagnostics.Debug.WriteLine(query);
+                    string query = "insert into Software(admin_id, softwareName, fileName, version, date_added, description, data, contentType) values ("
+                        + admin_id + ", \"" + softwareName + "\", \"" + fileName + "\", \"" + version + "\", \"" + date + "\", \"" + description + 
+                        "\", @data, \"" + fileContentType + "\");";
+
                     //Save data to db
                     DBConnect db = new DBConnect();
-                    db.Insert(query);
+                    using (var cmd = new MySqlCommand(query, db.GetConnection()))
+                    {
+                        db.GetConnection().Open();
+                        cmd.Parameters.Add("@data", MySqlDbType.Blob).Value = fileBytes;
+                        cmd.ExecuteNonQuery();
+                        db.GetConnection().Close();
+                    }
                 }
             }
             return View("Index");

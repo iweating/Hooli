@@ -124,6 +124,11 @@ namespace Hooli.MySql
             }
         }
 
+        public MySqlConnection GetConnection()
+        {
+            return this.connection;
+        }
+
         /*public List<string>[] Select(string query)
         {
             List<string>[] list=new List<string>[99];
