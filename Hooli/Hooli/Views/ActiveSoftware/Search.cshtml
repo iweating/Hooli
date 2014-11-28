@@ -1,4 +1,4 @@
-﻿@model Hooli.Models.SoftwareModel
+﻿@model IEnumerable<Hooli.Models.SoftwareModel>
 @using Hooli.Models;
 
 <html>
@@ -28,7 +28,7 @@
             <th>Download</th>
             <th>Delete</th>
         </tr>
-        @foreach (SoftwareModel m in ViewBag.SoftwareList)
+        @foreach (SoftwareModel m in Model)
         { 
             <tr>
                 <td>@m.softwareName</td>

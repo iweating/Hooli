@@ -67,6 +67,7 @@ namespace Hooli.Controllers
 
             DBConnect db = new DBConnect();
             string selectQueryString = "select * from Software where softwareName = \"" + softwareName + "\";";
+
             List<SoftwareModel> software = new List<SoftwareModel>();
             foreach(DataRow row in db.GetData(selectQueryString).Rows) {
                 software.Add(new SoftwareModel()
@@ -80,8 +81,8 @@ namespace Hooli.Controllers
                     downloads = (int)row["downloads"]
                 });
             }
-            ViewBag.SoftwareList = software;
-            return View();
+            IEnumerable<SoftwareModel> model = software;
+            return View(model);
         }
     }
 }
