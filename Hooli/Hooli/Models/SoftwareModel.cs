@@ -20,6 +20,6 @@ namespace Hooli.Models
         public string description { get; set; }
         public string data { get; set; }
         public string contentType { get; set; }
-        //public int downloads { get; set; }
+        public int downloads { get; set; }
     }
 }

@@ -1,0 +1,48 @@
+﻿@model Hooli.Models.SoftwareModel
+@using Hooli.Models;
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>View1</title>
+</head>
+
+<body>
+
+    @using (Html.BeginForm("Search", "ActiveSoftware", FormMethod.Post))
+    {
+        <table>
+            <tr>
+                <td><textarea name="Search_input" cols="20" rows="1"></textarea></td>
+                <td><input type="submit" name="Search" value="Search" /></td>
+            </tr>
+        </table>
+    }
+    <h2>Active Software</h2>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Date Added</th>
+            <th>Description</th>
+            <th>Download</th>
+            <th>Delete</th>
+        </tr>
+        @foreach (SoftwareModel m in ViewBag.SoftwareList)
+        { 
+            <tr>
+                <td>@m.softwareName</td>
+                <td>@m.date_added</td>
+                <td>@m.description</td>
+                <td>@Html.ActionLink("Download", "Download", "ActiveSoftware", new { id = m.id }, null)</td>
+                <td>@Html.ActionLink("Delete", "Delete", "ActiveSoftware", new { id = m.id }, null)</td>
+            </tr>
+        }
+    </table>
+
+    
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html>

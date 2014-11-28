@@ -5,13 +5,22 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Active Software</h2>
+
 @{
     DBConnect db = new DBConnect();
     string selectQueryString = "select * from Software";
 }
 
-
+@using (Html.BeginForm("Search", "ActiveSoftware", FormMethod.Post))
+{
+    <table>
+        <tr>
+            <td><textarea name="Search_input" cols="20" rows="1"></textarea></td>
+            <td><input type="submit" name="Search" value="Search" /></td>
+         </tr>
+    </table>
+}
+<h2>Active Software</h2>
     <table>
         <tr>
             <th>Name</th>
