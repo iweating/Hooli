@@ -17,7 +17,11 @@ namespace Hooli.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            DBConnect db = new DBConnect();
+            string selectQueryString = "select * from Software";
+            var model = FillSoftwareModel(selectQueryString);
+            db.GetConnection().Close();
+            return View(model);
         }
         public FileResult Download()
         {
@@ -64,12 +68,40 @@ namespace Hooli.Controllers
         public ActionResult Search(FormCollection formCollection)
         {
             String softwareName = formCollection.Get("Search_input");
+            var checkedButton = formCollection.Get("searchType");
+            ViewBag.Search = true;
+            if (checkedButton == "isExactly")
+            {
+                string selectQueryString = "select * from Software where softwareName = \"" + softwareName + "\";";
+                return View("Index", FillSoftwareModel(selectQueryString));
+                
+            }
+            else if (checkedButton == "contains")
+            {
+                List<SoftwareModel> software = new List<SoftwareModel>();
+                string selectAll = "select * from Software";
+                var allSoftware = FillSoftwareModel(selectAll);
+                foreach (SoftwareModel model in allSoftware)
+                {
+                    if (model.softwareName.Contains(softwareName))
+                    {
+                        software.Add(model);
+                    }
+                }
+                return View("Index", software);
+            }
+            else
+            {
+                return View("Index");
+            }
+        }
 
+        private IEnumerable<SoftwareModel> FillSoftwareModel(String query)
+        {
             DBConnect db = new DBConnect();
-            string selectQueryString = "select * from Software where softwareName = \"" + softwareName + "\";";
-
             List<SoftwareModel> software = new List<SoftwareModel>();
-            foreach(DataRow row in db.GetData(selectQueryString).Rows) {
+            foreach (DataRow row in db.GetData(query).Rows)
+            {
                 software.Add(new SoftwareModel()
                 {
                     id = (int)row["id"],
@@ -81,8 +113,9 @@ namespace Hooli.Controllers
                     downloads = (int)row["downloads"]
                 });
             }
+            db.GetConnection().Close();
             IEnumerable<SoftwareModel> model = software;
-            return View(model);
+            return model;
         }
     }
 }
