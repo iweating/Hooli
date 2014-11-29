@@ -1,32 +1,62 @@
 ﻿@using Hooli.MySql;
 @using System.Data;
+@using Hooli.Models
+@model IEnumerable<Hooli.Models.SoftwareModel>
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Active Software</h2>
-@{
-    DBConnect db = new DBConnect();
-    string selectQueryString = "select * from Software";
-}
 <html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>View1</title>
+</head>
+
 <body>
+@using (Html.BeginForm("Search", "ActiveSoftware", FormMethod.Post))
+{
     <table>
         <tr>
-            <th>Name</th>
-            <th>Date Added</th>
-            <th>Description</th>
-            <th>Download</th>
+            <td><textarea name="Search_input" cols="20" rows="1"></textarea></td>
+            <td><input type="submit" name="Search" value="Search" /></td>
         </tr>
-        @foreach(DataRow row in db.GetData(selectQueryString).Rows)
-          {
-              <tr>
-                  <td>@row["softwareName"]</td>
-                  <td>@row["date_added"]</td>
-                  <td>@row["description"]</td>
-                  <td>Click Here</td>
-              </tr>
-          }
     </table>
+    <input type="radio" checked="checked" name="searchType" value="isExactly" id="isExactly" style="width: 15%" />
+    <label for="isExactly" style="display:inline">Is Exactly</label>
+    <input type="radio" name="searchType" value="contains" id="contains" style="width: 15%" />
+    <label for="contains" style="display:inline">Contains</label>
+
+
+}
+<h2>Active Software</h2>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Date Added</th>
+        <th>Description</th>
+        <th>Download</th>
+        <th>Delete</th>
+        <th>Edit</th>
+    </tr>
+    @foreach (SoftwareModel m in Model)
+    {
+        <tr>
+            <td>@m.softwareName</td>
+            <td>@m.date_added</td>
+            <td>@m.description</td>
+            <td>@Html.ActionLink("Download", "Download", "ActiveSoftware", new { id = m.id }, null)</td>
+            <td>@Html.ActionLink("Delete", "Delete", "ActiveSoftware", new { id = m.id }, null)</td>
+            <td>@Html.ActionLink("Edit", "Edit", "ActiveSoftware", new { id = m.id }, null)</td>
+            <!--Is there a way to pass the entire model through an action link??? Maybe do the buttons again...-->
+        </tr>
+    }
+</table>
+@if (ViewBag.Search == true)
+{
+    <br/>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}
 </body>
 </html>
