@@ -300,6 +300,7 @@
     <Content Include="Views\ActiveSoftware\Index.cshtml" />
     <Content Include="Views\AddNewSoftware\Index.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\ActiveSoftware\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

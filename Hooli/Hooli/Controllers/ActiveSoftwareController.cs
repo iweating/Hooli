@@ -65,6 +65,14 @@ namespace Hooli.Controllers
             return View("Index");
         }
 
+        public ActionResult Edit()
+        {
+            string query = "select * from Software where id = \"" + RouteData.Values["id"] + "\";";
+            var model = FillSoftwareModel(query);
+            if (model.Count() != 0) return View(model.ElementAt(0));
+            else return View("Error");
+        }
+
         public ActionResult Search(FormCollection formCollection)
         {
             String softwareName = formCollection.Get("Search_input");
@@ -72,8 +80,10 @@ namespace Hooli.Controllers
             ViewBag.Search = true;
             if (checkedButton == "isExactly")
             {
-                string selectQueryString = "select * from Software where softwareName = \"" + softwareName + "\";";
-                return View("Index", FillSoftwareModel(selectQueryString));
+                string query = "select * from Software where softwareName = \"" + softwareName + "\";";
+                var model = FillSoftwareModel(query);
+                if (model.Count() != 0) return View("Index", model.ElementAt(0));
+                else return View("Error");
                 
             }
             else if (checkedButton == "contains")
@@ -81,18 +91,22 @@ namespace Hooli.Controllers
                 List<SoftwareModel> software = new List<SoftwareModel>();
                 string selectAll = "select * from Software";
                 var allSoftware = FillSoftwareModel(selectAll);
-                foreach (SoftwareModel model in allSoftware)
+                if (allSoftware.Count() != 0)
                 {
-                    if (model.softwareName.Contains(softwareName))
+                    foreach (SoftwareModel model in allSoftware)
                     {
-                        software.Add(model);
+                        if (model.softwareName.Contains(softwareName))
+                        {
+                            software.Add(model);
+                        }
                     }
+                    return View("Index", software);
                 }
-                return View("Index", software);
+                else return View("Error");
             }
             else
             {
-                return View("Index");
+                return View("Error");
             }
         }
 
@@ -100,20 +114,22 @@ namespace Hooli.Controllers
         {
             DBConnect db = new DBConnect();
             List<SoftwareModel> software = new List<SoftwareModel>();
-            foreach (DataRow row in db.GetData(query).Rows)
+            if (db.GetData(query) != null)
             {
-                software.Add(new SoftwareModel()
+                foreach (DataRow row in db.GetData(query).Rows)
                 {
-                    id = (int)row["id"],
-                    admin_id = (int)row["admin_id"],
-                    softwareName = (string)row["softwareName"],
-                    version = (string)row["version"],
-                    date_added = (DateTime)row["date_added"],
-                    description = (string)row["description"],
-                    downloads = (int)row["downloads"]
-                });
+                    software.Add(new SoftwareModel()
+                    {
+                        id = (int)row["id"],
+                        admin_id = (int)row["admin_id"],
+                        softwareName = (string)row["softwareName"],
+                        version = (string)row["version"],
+                        date_added = (DateTime)row["date_added"],
+                        description = (string)row["description"],
+                        downloads = (int)row["downloads"]
+                    });
+                }
             }
-            db.GetConnection().Close();
             IEnumerable<SoftwareModel> model = software;
             return model;
         }

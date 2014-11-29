@@ -103,6 +103,23 @@ namespace Hooli.MySql
         public DataTable GetData(string query)
         {
             DataTable dt = new DataTable();
+            if (this.OpenConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand();
+
+                cmd.CommandText = query;
+                cmd.Connection = connection;
+
+                dt.Load(cmd.ExecuteReader());
+
+                this.CloseConnection();
+            }
+            return dt;
+        }
+
+        /*public DataTable GetData(string query)
+        {
+            DataTable dt = new DataTable();
             try
             {
                 this.OpenConnection();
@@ -114,6 +131,7 @@ namespace Hooli.MySql
             }
             catch
             {
+                //!!!!!!!!!Need to create error!!!!!!!!!!!!
                 System.Diagnostics.Debug.WriteLine("NO DB CXN FOUND");
                 return null;
             }
@@ -122,7 +140,7 @@ namespace Hooli.MySql
                 //close connection
                 this.CloseConnection();
             }
-        }
+        }*/
 
         public MySqlConnection GetConnection()
         {

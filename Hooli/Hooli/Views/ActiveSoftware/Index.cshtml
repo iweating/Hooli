@@ -25,6 +25,8 @@
     <label for="isExactly" style="display:inline">Is Exactly</label>
     <input type="radio" name="searchType" value="contains" id="contains" style="width: 15%" />
     <label for="contains" style="display:inline">Contains</label>
+
+
 }
 <h2>Active Software</h2>
 <table>
@@ -34,6 +36,7 @@
         <th>Description</th>
         <th>Download</th>
         <th>Delete</th>
+        <th>Edit</th>
     </tr>
     @foreach (SoftwareModel m in Model)
     {
@@ -43,11 +46,14 @@
             <td>@m.description</td>
             <td>@Html.ActionLink("Download", "Download", "ActiveSoftware", new { id = m.id }, null)</td>
             <td>@Html.ActionLink("Delete", "Delete", "ActiveSoftware", new { id = m.id }, null)</td>
+            <td>@Html.ActionLink("Edit", "Edit", "ActiveSoftware", new { id = m.id }, null)</td>
+            <!--Is there a way to pass the entire model through an action link??? Maybe do the buttons again...-->
         </tr>
     }
 </table>
 @if (ViewBag.Search == true)
 {
+    <br/>
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>
