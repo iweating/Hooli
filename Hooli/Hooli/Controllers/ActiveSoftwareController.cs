@@ -76,6 +76,27 @@ namespace Hooli.Controllers
             else return View("Error");
         }
 
+        public ActionResult Update(SoftwareModel model)
+        {
+            string query = "Update Software set softwareName=@softwareName, version=@version, date_added=@date, " +
+                           "description=@description where id = @id;";
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.AddWithValue("@softwareName", model.softwareName);
+            cmd.Parameters.AddWithValue("@version", model.version);
+            cmd.Parameters.AddWithValue("@date", DateTime.Now);
+            cmd.Parameters.AddWithValue("@description", model.description);
+            cmd.Parameters.AddWithValue("@id", model.id);
+
+            DBConnect db = new DBConnect();
+            db.Update(cmd);
+
+            query = "select * from Software";
+            cmd.CommandText = query;
+            var modelList = FillSoftwareModel(cmd);
+
+            return View("Index", modelList);
+        }
+
         public ActionResult Search(FormCollection formCollection)
         {
             String softwareName = formCollection.Get("Search_input"), query;

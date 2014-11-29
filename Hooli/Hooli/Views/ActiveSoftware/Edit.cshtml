@@ -12,22 +12,13 @@
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm("Update", "ActiveSoftware", FormMethod.Post))
+    {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
     
         <fieldset>
             <legend>SoftwareModel</legend>
-    
-            @Html.HiddenFor(model => model.id)
-    
-            <div class="editor-label">
-                @Html.LabelFor(model => model.admin_id)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.admin_id)
-                @Html.ValidationMessageFor(model => model.admin_id)
-            </div>
     
             <div class="editor-label">
                 @Html.LabelFor(model => model.softwareName)
@@ -35,14 +26,6 @@
             <div class="editor-field">
                 @Html.EditorFor(model => model.softwareName)
                 @Html.ValidationMessageFor(model => model.softwareName)
-            </div>
-    
-            <div class="editor-label">
-                @Html.LabelFor(model => model.fileName)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.fileName)
-                @Html.ValidationMessageFor(model => model.fileName)
             </div>
     
             <div class="editor-label">
@@ -54,45 +37,17 @@
             </div>
     
             <div class="editor-label">
-                @Html.LabelFor(model => model.date_added)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.date_added)
-                @Html.ValidationMessageFor(model => model.date_added)
-            </div>
-    
-            <div class="editor-label">
                 @Html.LabelFor(model => model.description)
             </div>
             <div class="editor-field">
                 @Html.EditorFor(model => model.description)
                 @Html.ValidationMessageFor(model => model.description)
             </div>
-    
-            <div class="editor-label">
-                @Html.LabelFor(model => model.data)
-            </div>
+
             <div class="editor-field">
-                @Html.EditorFor(model => model.data)
-                @Html.ValidationMessageFor(model => model.data)
+                @Html.HiddenFor(model => model.id)
             </div>
-    
-            <div class="editor-label">
-                @Html.LabelFor(model => model.contentType)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.contentType)
-                @Html.ValidationMessageFor(model => model.contentType)
-            </div>
-    
-            <div class="editor-label">
-                @Html.LabelFor(model => model.downloads)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.downloads)
-                @Html.ValidationMessageFor(model => model.downloads)
-            </div>
-    
+
             <p>
                 <input type="submit" value="Save" />
             </p>
