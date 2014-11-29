@@ -15,7 +15,7 @@ namespace Hooli.Controllers
         public ActionResult Index()
         {
             DBConnect connect = new DBConnect();
-            connect.Insert("Insert into Ratings values(1,1,1,3,3,3,3,8,11/16/14)");
+            //connect.Insert("Insert into Ratings values(1,1,1,3,3,3,3,8,11/16/14)");
             return View();
         }
 
