@@ -75,6 +75,22 @@ namespace Hooli.MySql
             }
         }
 
+        public void Insert(MySqlCommand cmd)
+        {
+            //open connection
+
+            if (this.OpenConnection() == true)
+            {
+                cmd.Connection = connection;
+
+                //Execute command
+                cmd.ExecuteNonQuery();
+
+                //close connection
+                this.CloseConnection();
+            }
+        }
+
         public void Update(string query)
         {
             if (this.OpenConnection() == true)
@@ -90,6 +106,19 @@ namespace Hooli.MySql
             }
         }
 
+        public void Update(MySqlCommand cmd)
+        {
+            if (this.OpenConnection() == true)
+            {
+                cmd.Connection = connection;
+
+                cmd.ExecuteNonQuery();
+
+                this.CloseConnection();
+            }
+        }
+
+
         public void Delete(string query)
         {
             if (this.OpenConnection() == true)
@@ -100,7 +129,31 @@ namespace Hooli.MySql
             }
         }
 
-        public DataTable GetData(string query)
+        public void Delete(MySqlCommand cmd)
+        {
+            if (this.OpenConnection() == true)
+            {
+                cmd.Connection = connection;
+                cmd.ExecuteNonQuery();
+                this.CloseConnection();
+            }
+        }
+
+        public DataTable GetData(MySqlCommand cmd)
+        {
+            DataTable dt = new DataTable();
+            if (this.OpenConnection() == true)
+            {
+                cmd.Connection = connection;
+
+                dt.Load(cmd.ExecuteReader());
+
+                this.CloseConnection();
+            }
+            return dt;
+        }
+
+        /*public DataTable GetData(string query)
         {
             DataTable dt = new DataTable();
             if (this.OpenConnection() == true)
@@ -115,7 +168,7 @@ namespace Hooli.MySql
                 this.CloseConnection();
             }
             return dt;
-        }
+        }*/
 
         /*public DataTable GetData(string query)
         {
@@ -142,10 +195,6 @@ namespace Hooli.MySql
             }
         }*/
 
-        public MySqlConnection GetConnection()
-        {
-            return this.connection;
-        }
 
         /*public List<string>[] Select(string query)
         {

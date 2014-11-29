@@ -18,17 +18,19 @@ namespace Hooli.Controllers
         public ActionResult Index()
         {
             DBConnect db = new DBConnect();
-            string selectQueryString = "select * from Software";
-            var model = FillSoftwareModel(selectQueryString);
-            db.GetConnection().Close();
+            string query = "select * from Software";
+            MySqlCommand cmd = new MySqlCommand(query);
+            var model = FillSoftwareModel(cmd);
             return View(model);
         }
+
         public FileResult Download()
         {
             DBConnect db = new DBConnect();
             string softwareId = (string)RouteData.Values["id"];
             string query = "select * from Software where id = " + softwareId + ";";
-            DataTable dt = db.GetData(query);
+            MySqlCommand cmd = new MySqlCommand(query);
+            DataTable dt = db.GetData(cmd);
             Byte[] bytes = (Byte[])dt.Rows[0]["data"];
             string contentType = (string)dt.Rows[0]["contentType"];
             string fileName = (string)dt.Rows[0]["fileName"];
@@ -38,59 +40,63 @@ namespace Hooli.Controllers
 
         private void UpdateDownloadCount(string id, int prevDownloads)
         {
-            string query = "Update Software set downloads = @newDownloads";
+            string query = "Update Software set downloads = @newDownloads where id = @id";
             DBConnect db = new DBConnect();
-            using (var cmd = new MySqlCommand(query, db.GetConnection()))
-            {
-                db.GetConnection().Open();
-                cmd.Parameters.Add("@newDownloads", MySqlDbType.Int16).Value = prevDownloads + 1;
-                cmd.ExecuteNonQuery();
-                db.GetConnection().Close();
-            }
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.Add("@id", MySqlDbType.String).Value = id;
+            cmd.Parameters.Add("@newDownloads", MySqlDbType.Int16).Value = prevDownloads + 1;
+            db.Update(cmd);
         }
+
         //Need to have alert saying "Are you sure??" 
         public ActionResult Delete()
         {
 //Page.ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('Are you sure?');", true);
 
             string query = "Delete from Software where id = @softwareId";
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.Add("@softwareId", MySqlDbType.String).Value = (string)RouteData.Values["id"];
+
             DBConnect db = new DBConnect();
-            using (var cmd = new MySqlCommand(query, db.GetConnection()))
-            {
-                db.GetConnection().Open();
-                cmd.Parameters.Add("@softwareId", MySqlDbType.String).Value = (string)RouteData.Values["id"];
-                cmd.ExecuteNonQuery();
-                db.GetConnection().Close();
-            }
-            return View("Index");
+            db.Delete(cmd);
+
+            query = "select * from Software";
+            cmd.CommandText = query;
+            var model = FillSoftwareModel(cmd);
+
+            return View("Index", model);
         }
 
         public ActionResult Edit()
         {
             string query = "select * from Software where id = \"" + RouteData.Values["id"] + "\";";
-            var model = FillSoftwareModel(query);
+            MySqlCommand cmd = new MySqlCommand(query);
+            var model = FillSoftwareModel(cmd);
             if (model.Count() != 0) return View(model.ElementAt(0));
             else return View("Error");
         }
 
         public ActionResult Search(FormCollection formCollection)
         {
-            String softwareName = formCollection.Get("Search_input");
+            String softwareName = formCollection.Get("Search_input"), query;
+            MySqlCommand cmd = new MySqlCommand();
             var checkedButton = formCollection.Get("searchType");
             ViewBag.Search = true;
             if (checkedButton == "isExactly")
             {
-                string query = "select * from Software where softwareName = \"" + softwareName + "\";";
-                var model = FillSoftwareModel(query);
-                if (model.Count() != 0) return View("Index", model.ElementAt(0));
-                else return View("Error");
+                query = "select * from Software where softwareName = @softwareName";
+                cmd.CommandText = query;
+                cmd.Parameters.Add("@softwareName", MySqlDbType.String).Value = softwareName;
+                var model = FillSoftwareModel(cmd);
+                return View("Index", model);
                 
             }
             else if (checkedButton == "contains")
             {
                 List<SoftwareModel> software = new List<SoftwareModel>();
-                string selectAll = "select * from Software";
-                var allSoftware = FillSoftwareModel(selectAll);
+                query = "select * from Software";
+                cmd.CommandText = query;
+                var allSoftware = FillSoftwareModel(cmd);
                 if (allSoftware.Count() != 0)
                 {
                     foreach (SoftwareModel model in allSoftware)
@@ -110,13 +116,13 @@ namespace Hooli.Controllers
             }
         }
 
-        private IEnumerable<SoftwareModel> FillSoftwareModel(String query)
+        private IEnumerable<SoftwareModel> FillSoftwareModel(MySqlCommand cmd)
         {
             DBConnect db = new DBConnect();
             List<SoftwareModel> software = new List<SoftwareModel>();
-            if (db.GetData(query) != null)
+            if (db.GetData(cmd) != null)
             {
-                foreach (DataRow row in db.GetData(query).Rows)
+                foreach (DataRow row in db.GetData(cmd).Rows)
                 {
                     software.Add(new SoftwareModel()
                     {
