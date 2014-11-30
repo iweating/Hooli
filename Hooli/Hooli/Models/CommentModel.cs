@@ -15,5 +15,6 @@ namespace Hooli.Models
         public int Software_ID { get; set;  }
         public DateTime Date {get; set; }
         public string Text {get; set; }
+        public int Rating { get; set; }
     }
 }
