@@ -305,6 +305,8 @@
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\ActiveSoftware\Edit.cshtml" />
     <Content Include="Views\AddNewSoftware\UnauthorizedAccess.cshtml" />
+    <Content Include="Views\Comment\Index.cshtml" />
+    <Content Include="Views\AddNewSoftware\Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

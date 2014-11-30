@@ -13,9 +13,13 @@ namespace Hooli.Models
         [Display(Name="Software name")]
         [Required]
         public string softwareName { get; set; }
-        [Display(Name = "Version number")]
-        public string fileName { get; set; }
-        [Required]
+        [Display(Name = "Upload File")]
+        [Required(ErrorMessage = "The software file is required")]
+        [DataType(DataType.Upload)]
+        //public string fileName { get; set; }
+        public HttpPostedFileBase fileName { get; set; }
+        [Display(Name="Version")]
+        [Required(ErrorMessage="A version number is required")]
         public string version { get; set; }
         public DateTime date_added { get; set; }
         [Display(Name = "Description")]
