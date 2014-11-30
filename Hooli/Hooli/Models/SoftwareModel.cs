@@ -15,7 +15,7 @@ namespace Hooli.Models
         [Required(ErrorMessage="The software's name is required")]
         public string softwareName { get; set; }
         [Display(Name = "Upload File")]
-        //[Required(ErrorMessage = "The software file is required")]
+        [Required(ErrorMessage = "The software file is required")]
         [DataType(DataType.Upload)]
         //public string fileName { get; set; }
         public HttpPostedFileBase fileName { get; set; }

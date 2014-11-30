@@ -23,7 +23,7 @@ namespace Hooli.Controllers
                 return View();
             //}
             //return View("UnauthorizedAccess");
-            }
+        }
         //[Authorize(Roles="Admin")]
         public ActionResult Save(FormCollection formCollection, SoftwareModel model)
         {
@@ -34,15 +34,9 @@ namespace Hooli.Controllers
 
                 //Uses User.Identity.Name to find who's logged in-- should be used to find adminId
                 System.Diagnostics.Debug.WriteLine(User.Identity.Name);
-
+           
                 if((file!=null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
                 {
-                    string fileType = file.ContentType;
-                    if (fileType.Contains("application"))
-                    {
-                        ViewBag.Error = "No executable files can be uploaded.";
-                        return View("UnsuccessfulUpload");
-                    }
                     BinaryReader br = new BinaryReader(file.InputStream);
                     Byte[] fileBytes = br.ReadBytes(file.ContentLength);
                     br.Close();                    
@@ -63,22 +57,10 @@ namespace Hooli.Controllers
                     //Save data to db
                     DBConnect db = new DBConnect();
                     db.Insert(cmd);
-
-                    return View("Success");
                 }
-                else
-                {
-                    ViewBag.Error = "Error in processing the file.";
-                    return View("UnsuccessfulUpload");
-                }
-                
-                }
-            else
-            {
-                ViewBag.Error = "No request was sent.";
-                return View("UnsuccessfulUpload");
             }
-            }
+            return View("Success");
+        }
             return View("Index");
         }
 
