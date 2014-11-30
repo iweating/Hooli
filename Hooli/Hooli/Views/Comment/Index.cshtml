@@ -1,28 +1,35 @@
 ﻿@using Hooli.MySql;
 @using System.Data;
+@using Hooli.Models;
 @model IEnumerable<Hooli.Models.CommentModel>
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Comments for: softwareName</h2>
+<h2>Comments</h2>
 
 <style>
    #commenttable .cellright {text-align:right}
 </style>
 
-@for(int i = 1; i < 5; i++)
+@foreach (CommentModel m in Model)
 {
+<table width="100%" id="commenttable" >
+    <tr>
+        <th>@Html.ActionLink("new comment", "add", "Comment", new { id = m.ID }, null)</th>
+        <th class="cellright">sort by</th>
+    </tr>
+</table>
 <table width="100%" id="commenttable" bgcolor="#FFFFF">
 <tr>
-    <th>user</th>
-    <td>date</td>
-    <td class="cellright">rating</td>
+    <th>By: @m.ID</th>
+    <td>on @m.Date</td>
+    <td class="cellright">@m.Rating /5</td>
 </tr>
     <tr>
-        <td> text</td>
+        <td> @m.Text</td>
     </tr>
-
+    <!--if current usrid = usrid of post, have edit option-->
 </table>
 <br />
 }

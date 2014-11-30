@@ -18,22 +18,25 @@ namespace Hooli.Controllers
         public ActionResult Index()
         {
             DBConnect db = new DBConnect();
-            string query = "select * from comments";
+            string query = "select * from comments where Software_ID = \"" + RouteData.Values["id"] + "\";";
             MySqlCommand cmd = new MySqlCommand(query);
             var model = FillCommentModel(cmd);
             return View(model);
         }
 
-       
-        public ActionResult Open()
+        public ActionResult add()
         {
-            DBConnect db = new DBConnect();
-            string softwareId = (string)RouteData.Values["id"];
-            string query = "select * from Comments where softwareId = " + softwareId + ";";
+            string query = "select * from comments where id = \"" + RouteData.Values["id"] + "\";";
             MySqlCommand cmd = new MySqlCommand(query);
-            DataTable dt = db.GetData(cmd);
             var model = FillCommentModel(cmd);
+            return View();
         }
+
+        public ActionResult sort(FormCollection formCollection)
+        {
+            return View();
+        }
+       
         private IEnumerable<CommentModel> FillCommentModel(MySqlCommand cmd)
         {
             DBConnect db = new DBConnect();
@@ -48,7 +51,8 @@ namespace Hooli.Controllers
                         User_ID = (int)row["User_ID"],
                         Software_ID = (int)row["Software_ID"],
                         Date = (DateTime)row["Date"],
-                        Text = (string)row["Comment"]
+                        Text = (string)row["Comment"],
+                        Rating = (int)row["Rating"]
                     });
                 }
             }
