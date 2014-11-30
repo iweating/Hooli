@@ -2,3 +2,23 @@
     ViewBag.Title = "Home Page";
 }
 Home Page
+
+<h2>About us</h2>
+<p>
+    This is an about us paragraph that will be a description of Hooli and this website.
+</p>
+<hr />
+
+<h2>Recent Releases</h2>
+<!--pull newest 3 software products from DB-->
+<table>
+    @for (int i = 0; i < 3; i++)
+    {
+        <tr>
+            <td>software @i</td>
+            <td>version @i</td>
+            <td>date @i </td>
+        </tr>
+    }
+</table>
+<hr />
