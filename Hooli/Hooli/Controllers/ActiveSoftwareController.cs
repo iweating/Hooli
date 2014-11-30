@@ -144,7 +144,7 @@ namespace Hooli.Controllers
             if (db.GetData(cmd) != null)
             {
                 foreach (DataRow row in db.GetData(cmd).Rows)
-                {
+                {                 
                     software.Add(new SoftwareModel()
                     {
                         id = (int)row["id"],
@@ -152,7 +152,7 @@ namespace Hooli.Controllers
                         softwareName = (string)row["softwareName"],
                         version = (string)row["version"],
                         date_added = (DateTime)row["date_added"],
-                        description = (string)row["description"],
+                        description = (string.IsNullOrEmpty(row["description"].ToString()) ? null : (string)row["description"]),
                         downloads = (int)row["downloads"]
                     });
                 }
