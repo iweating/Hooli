@@ -1,0 +1,38 @@
+﻿@using Hooli.MySql;
+@using System.Data;
+@using Hooli.Models;
+@model IEnumerable<Hooli.Models.CommentModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Comments</h2>
+
+<style>
+   #commenttable .cellright {text-align:right}
+</style>
+
+<table width="100%" id="commenttable">
+    <tr>
+        <th>@Html.ActionLink("new comment", "Index", "AddComment", new { id = Model.First().Software_ID }, null)</th>
+        <th>@Html.ActionLink("rate", "rate", "Comment", new { id = Model.First().Software_ID }, null)</th>
+        <th class="cellright">sort by</th>
+    </tr>
+</table>
+
+@foreach (CommentModel m in Model)
+{
+
+<table width="100%" id="commenttable" bgcolor="#FFFFF">
+<tr>
+    <th>By: @m.ID</th>
+    <td>on: @m.Date</td>
+    <td class="cellright">@m.Rating /5</td>
+</tr>
+    <tr>
+        <td> @m.Text</td>
+    </tr>
+    <!--if current usrid = usrid of post, have edit option-->
+</table>
+<br />
+}

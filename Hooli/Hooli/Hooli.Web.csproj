@@ -39,6 +39,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data">
       <HintPath>..\packages\MySql.Data.6.9.5\lib\net45\MySql.Data.dll</HintPath>
@@ -194,6 +201,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActiveSoftwareController.cs" />
     <Compile Include="Controllers\AddNewSoftwareController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -201,8 +209,18 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <Compile Include="Models\DownloadHistoryModel.cs" />
+    <Compile Include="Models\ProfileDownloadViewModel.cs" />
+    <Compile Include="Models\ProfileModel.cs" />
+=======
+    <Compile Include="Models\CommentModel.cs" />
+>>>>>>> d1eae0b85ff5a0a5dcae5252b47916c89407a651
+=======
+>>>>>>> parent of a801043... Profile view
     <Compile Include="Models\SoftwareModel.cs" />
-    <Compile Include="MySql\DBConnect.cs" />
+    <Compile Include="Views\MySql\DBConnect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -263,6 +281,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\manageSoftware.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -307,6 +326,7 @@
     <Content Include="Views\AddNewSoftware\UnauthorizedAccess.cshtml" />
     <Content Include="Views\Comment\Index.cshtml" />
     <Content Include="Views\AddNewSoftware\Success.cshtml" />
+    <Content Include="Views\AddNewSoftware\UnsuccessfulUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
