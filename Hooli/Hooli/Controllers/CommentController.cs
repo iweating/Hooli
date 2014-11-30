@@ -33,6 +33,7 @@ namespace Hooli.Controllers
             MySqlCommand cmd = new MySqlCommand(query);
             DataTable dt = db.GetData(cmd);
             var model = FillCommentModel(cmd);
+            return View(model);
         }
         private IEnumerable<CommentModel> FillCommentModel(MySqlCommand cmd)
         {
