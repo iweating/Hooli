@@ -7,7 +7,6 @@ using System.IO;
 using MySql.Data.MySqlClient;
 using Hooli.Models;
 using Hooli.MySql;
-using System.Web.Security;
 
 namespace Hooli.Controllers
 {
@@ -16,15 +15,12 @@ namespace Hooli.Controllers
         //
         // GET: /AddNewSoftware/
 
+        //[Authorize(Roles="Admin")]
         public ActionResult Index()
         {
-            if (Roles.IsUserInRole("Admin"))
-            {
                 return View();
-        }
-            return View("UnauthorizedAccess");
-        }
-        [Authorize(Roles="Admin")]
+            }
+
         public ActionResult Save(FormCollection formCollection, SoftwareModel model)
         {
             if(Request != null)
@@ -33,7 +29,7 @@ namespace Hooli.Controllers
 
                 //Uses User.Identity.Name to find who's logged in-- should be used to find adminId
                 System.Diagnostics.Debug.WriteLine(User.Identity.Name);
-           
+
                 if((file!=null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
                 {
                     string fileType = file.ContentType;

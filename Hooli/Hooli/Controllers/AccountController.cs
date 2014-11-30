@@ -30,7 +30,7 @@ namespace Hooli.Controllers
         //
         // POST: /Account/Login
 
-        /*[HttpPost]
+        [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
@@ -43,28 +43,6 @@ namespace Hooli.Controllers
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
             return View(model);
-        }*/
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model, string returnUrl)
-        {
-            if (ModelState.IsValid)
-            {
-                if (Membership.ValidateUser(model.UserName, model.Password))
-                {
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    
-                    return RedirectToAction("Index", "Home");
-                    
-                }
-                else
-                {
-                    ModelState.AddModelError("", "The user name or password is not correct.");
-                }  
-            }
-            return View(model);
         }
 
         //
@@ -74,7 +52,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            FormsAuthentication.SignOut();
+            WebSecurity.Logout();
 
             return RedirectToAction("Index", "Home");
         }
@@ -101,16 +79,15 @@ namespace Hooli.Controllers
                 // Attempt to register the user
                 try
                 {
-                    Membership.CreateUser(model.UserName, model.Password);
-                    FormsAuthentication.SetAuthCookie(model.UserName, false);
+                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
+                    WebSecurity.Login(model.UserName, model.Password);
                     Roles.AddUserToRole(model.UserName, model.Role);
                     return RedirectToAction("Index", "Home");
                 }
-                catch (Exception ex)
+                catch (MembershipCreateUserException e)
                 {
-                    ModelState.AddModelError("", "An Error Occured");
+                    ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
                 }
-
             }
 
             // If we got this far, something failed, redisplay form
