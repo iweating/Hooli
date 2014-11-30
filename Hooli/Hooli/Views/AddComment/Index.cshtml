@@ -1,0 +1,23 @@
+﻿@using Hooli.MySql;
+@using System.Data;
+@using Hooli.Models
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>AddComment</h2>
+<head>
+    <style>
+        label { padding: 0; margin: 0; display: block;}
+        textarea { width: 100%; border: 1px; padding: 4px; }
+        .marginright { padding-right: 10px; }
+    </style>
+</head>
+
+<body>
+    @using (Html.BeginForm("Submit", "addComment", FormMethod.Post))
+    <label class="marginright">
+        <textarea name="comment_text" rows="4" placeholder="Enter Comment"></textarea>
+    </label>
+    <input type="submit" name="Submit" value="Submit" />
+</body>

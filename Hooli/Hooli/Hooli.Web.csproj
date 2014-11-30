@@ -193,6 +193,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActiveSoftwareController.cs" />
+    <Compile Include="Controllers\AddCommentController.cs" />
     <Compile Include="Controllers\AddNewSoftwareController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -308,6 +309,7 @@
     <Content Include="Views\ActiveSoftware\Edit.cshtml" />
     <Content Include="Views\AddNewSoftware\UnauthorizedAccess.cshtml" />
     <Content Include="Views\Comment\Index.cshtml" />
+    <Content Include="Views\AddComment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
