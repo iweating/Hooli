@@ -1,5 +1,23 @@
-﻿@{
+﻿@using Hooli.MySql;
+@using System.Data;
+@{
     ViewBag.Title = "Index";
 }
 
 <h2>Comment</h2>
+
+<style>
+   #commenttable .cellright {text-align:right}
+</style>
+
+<table id="commenttable" bgcolor="#FFFFF">
+    <!-- for each comment in db-->
+<tr>
+    <th>user</th>
+    <td>date</td>
+    <td class="cellright">rating</td>
+</tr>
+    <tr>
+        <td> text</td>
+    </tr>
+</table>
