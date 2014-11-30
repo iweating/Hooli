@@ -23,7 +23,7 @@ namespace Hooli.Controllers
             var model = FillSoftwareModel(cmd);
             return View(model);
         }
-
+       
         public FileResult Download()
         {
             DBConnect db = new DBConnect();
