@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data;
+using MySql.Data.MySqlClient;
+using Hooli.Models;
+using Hooli.MySql;
 
 namespace Hooli.Controllers
 {
@@ -13,93 +17,43 @@ namespace Hooli.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            DBConnect db = new DBConnect();
+            string query = "select * from comments";
+            MySqlCommand cmd = new MySqlCommand(query);
+            var model = FillCommentModel(cmd);
+            return View(model);
         }
 
-        //
-        // GET: /Comment/Details/5
-
-        public ActionResult Details(int id)
+       
+        public ActionResult Open()
         {
-            return View();
+            DBConnect db = new DBConnect();
+            string softwareId = (string)RouteData.Values["id"];
+            string query = "select * from Comments where softwareId = " + softwareId + ";";
+            MySqlCommand cmd = new MySqlCommand(query);
+            DataTable dt = db.GetData(cmd);
+            var model = FillCommentModel(cmd);
         }
-
-        //
-        // GET: /Comment/Create
-
-        public ActionResult Create()
+        private IEnumerable<CommentModel> FillCommentModel(MySqlCommand cmd)
         {
-            return View();
-        }
-
-        //
-        // POST: /Comment/Create
-
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
+            DBConnect db = new DBConnect();
+            List<CommentModel> comments = new List<CommentModel>();
+            if(db.GetData(cmd) != null)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                foreach(DataRow row in db.GetData(cmd).Rows)
+                {
+                    comments.Add(new CommentModel()
+                    {
+                        ID = (int)row["ID"],
+                        User_ID = (int)row["User_ID"],
+                        Software_ID = (int)row["Software_ID"],
+                        Date = (DateTime)row["Date"],
+                        Text = (string)row["Comment"]
+                    });
+                }
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /Comment/Edit/5
-
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Comment/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /Comment/Delete/5
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Comment/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            IEnumerable<CommentModel> model = comments;
+            return model;
         }
     }
 }

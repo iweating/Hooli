@@ -1,17 +1,19 @@
 ﻿@using Hooli.MySql;
 @using System.Data;
+@model IEnumerable<Hooli.Models.CommentModel>
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Comment</h2>
+<h2>Comments for: softwareName</h2>
 
 <style>
    #commenttable .cellright {text-align:right}
 </style>
 
-<table id="commenttable" bgcolor="#FFFFF">
-    <!-- for each comment in db-->
+@for(int i = 1; i < 5; i++)
+{
+<table width="100%" id="commenttable" bgcolor="#FFFFF">
 <tr>
     <th>user</th>
     <td>date</td>
@@ -20,4 +22,7 @@
     <tr>
         <td> text</td>
     </tr>
+
 </table>
+<br />
+}

@@ -37,6 +37,7 @@
         <th>Download</th>
         <th>Delete</th>
         <th>Edit</th>
+        <th>Comments</th>
     </tr>
     @foreach (SoftwareModel m in Model)
     {
@@ -47,6 +48,7 @@
             <td>@Html.ActionLink("Download", "Download", "ActiveSoftware", new { id = m.id }, null)</td>
             <td>@Html.ActionLink("Delete", "Delete", "ActiveSoftware", new { id = m.id }, null)</td>
             <td>@Html.ActionLink("Edit", "Edit", "ActiveSoftware", new { id = m.id }, null)</td>
+            <td>@Html.ActionLink("Comment", "Open", "Comment", new {id = m.id }, null)</td>
             <!--Html.ActionLink(rating)</td>-->
             <!--Is there a way to pass the entire model through an action link??? Maybe do the buttons again...-->
         </tr>
