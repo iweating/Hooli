@@ -7,6 +7,7 @@ using System.IO;
 using MySql.Data.MySqlClient;
 using Hooli.Models;
 using Hooli.MySql;
+using System.Web.Security;
 
 namespace Hooli.Controllers
 {
@@ -15,12 +16,15 @@ namespace Hooli.Controllers
         //
         // GET: /AddNewSoftware/
 
-        //[Authorize(Roles="Admin")]
         public ActionResult Index()
         {
-            return View();
+            if (Roles.IsUserInRole("Admin"))
+            {
+                return View();
+            }
+            return View("UnauthorizedAccess");
         }
-
+        [Authorize(Roles="Admin")]
         public ActionResult Save(FormCollection formCollection, SoftwareModel model)
         {
             if(Request != null)
