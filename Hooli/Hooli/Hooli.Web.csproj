@@ -202,6 +202,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\DownloadHistoryModel.cs" />
+    <Compile Include="Models\ProfileDownloadViewModel.cs" />
+    <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\SoftwareModel.cs" />
     <Compile Include="MySql\DBConnect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

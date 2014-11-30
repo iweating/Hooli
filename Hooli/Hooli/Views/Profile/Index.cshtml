@@ -1,5 +1,43 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿@model Hooli.Models.ProfileModel
+
+
+@{
+    ViewBag.Title = "Profile";
 }
 
 <h2>User Profile</h2>
+
+    <div class="container">
+        <table>
+            <thead>
+                <tr class="header">
+                    <th>
+                        <div>Software</div>
+                    </th>
+                    <th>
+                        <div>Current Version</div>
+                    </th>
+                    <th>
+                        <div>New Version</div>
+                    </th>
+                    <th>
+                        <div>Download</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var download in downloadHistory)
+            {
+                <tr>
+                    <td>align</td>
+                    <td>left, center, right</td>
+                    <td>Not supported in HTML5. Deprecated in HTML 4.01. Specifies the alignment of a table according to surrounding text</td>
+                    <td>download</td>
+                </tr>
+            }
+
+               
+     
+            </tbody>
+        </table>
+    </div>
