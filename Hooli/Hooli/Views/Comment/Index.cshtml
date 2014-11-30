@@ -17,6 +17,7 @@
 <table width="100%" id="commenttable" >
     <tr>
         <th>@Html.ActionLink("new comment", "add", "Comment", new { id = m.ID }, null)</th>
+        <th>@Html.ActionLink("rate", "rate", "Comment", new { id = m.ID }, null)</th>
         <th class="cellright">sort by</th>
     </tr>
 </table>

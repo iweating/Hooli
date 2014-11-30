@@ -32,6 +32,11 @@ namespace Hooli.Controllers
             return View();
         }
 
+        public ActionResult rate()
+        {
+            return View();
+        }
+
         public ActionResult sort(FormCollection formCollection)
         {
             return View();
