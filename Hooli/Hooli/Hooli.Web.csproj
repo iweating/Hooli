@@ -39,6 +39,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data">
       <HintPath>..\packages\MySql.Data.6.9.5\lib\net45\MySql.Data.dll</HintPath>
@@ -193,7 +200,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActiveSoftwareController.cs" />
-    <Compile Include="Controllers\AddCommentController.cs" />
     <Compile Include="Controllers\AddNewSoftwareController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -205,7 +211,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\SoftwareModel.cs" />
-    <Compile Include="MySql\DBConnect.cs" />
+    <Compile Include="Views\MySql\DBConnect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -309,7 +315,7 @@
     <Content Include="Views\ActiveSoftware\Edit.cshtml" />
     <Content Include="Views\AddNewSoftware\UnauthorizedAccess.cshtml" />
     <Content Include="Views\Comment\Index.cshtml" />
-    <Content Include="Views\AddComment\Index.cshtml" />
+    <Content Include="Views\AddNewSoftware\Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

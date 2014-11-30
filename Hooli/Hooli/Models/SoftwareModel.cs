@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 
 namespace Hooli.Models
 {
@@ -10,12 +11,16 @@ namespace Hooli.Models
     {
         public int id { get; set; }
         public int admin_id { get; set; }
-        [Display(Name="Software name")]
-        [Required]
+        [Display(Name = "Software name")]
+        [Required(ErrorMessage="The software's name is required")]
         public string softwareName { get; set; }
-        [Display(Name = "Version number")]
-        public string fileName { get; set; }
-        [Required]
+        [Display(Name = "Upload File")]
+        [Required(ErrorMessage = "The software file is required")]
+        [DataType(DataType.Upload)]
+        //public string fileName { get; set; }
+        public HttpPostedFileBase fileName { get; set; }
+        [Display(Name="Version")]
+        [Required(ErrorMessage="A version number is required")]
         public string version { get; set; }
         public DateTime date_added { get; set; }
         [Display(Name = "Description")]
@@ -23,5 +28,18 @@ namespace Hooli.Models
         public string data { get; set; }
         public string contentType { get; set; }
         public int downloads { get; set; }
+
+    }
+
+    public class SoftwareContext : DbContext
+    {
+
+        public SoftwareContext()
+            : base("LocalMySqlServer")
+        {
+        }
+
+        public DbSet<SoftwareModel> Software { get; set; }
+
     }
 }

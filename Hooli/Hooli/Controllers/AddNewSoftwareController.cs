@@ -18,18 +18,19 @@ namespace Hooli.Controllers
 
         public ActionResult Index()
         {
-            if (Roles.IsUserInRole("Admin"))
-            {
+            //if (Roles.IsUserInRole("Admin"))
+            //{
                 return View();
-            }
-            return View("UnauthorizedAccess");
+            //}
+            //return View("UnauthorizedAccess");
         }
-        [Authorize(Roles="Admin")]
+        //[Authorize(Roles="Admin")]
         public ActionResult Save(FormCollection formCollection, SoftwareModel model)
         {
             if(Request != null)
             {
-                HttpPostedFileBase file = Request.Files["Uploaded File"];
+                //HttpPostedFileBase file = Request.Files["Uploaded File"];
+                HttpPostedFileBase file = model.fileName;
 
                 //Uses User.Identity.Name to find who's logged in-- should be used to find adminId
                 System.Diagnostics.Debug.WriteLine(User.Identity.Name);
@@ -58,7 +59,7 @@ namespace Hooli.Controllers
                     db.Insert(cmd);
                 }
             }
-            return View("Index");
+            return View("Success");
         }
 
     }
