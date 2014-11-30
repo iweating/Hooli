@@ -210,12 +210,15 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Compile Include="Models\DownloadHistoryModel.cs" />
     <Compile Include="Models\ProfileDownloadViewModel.cs" />
     <Compile Include="Models\ProfileModel.cs" />
 =======
     <Compile Include="Models\CommentModel.cs" />
 >>>>>>> d1eae0b85ff5a0a5dcae5252b47916c89407a651
+=======
+>>>>>>> parent of a801043... Profile view
     <Compile Include="Models\SoftwareModel.cs" />
     <Compile Include="Views\MySql\DBConnect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
