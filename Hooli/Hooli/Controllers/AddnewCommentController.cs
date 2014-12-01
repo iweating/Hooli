@@ -20,6 +20,7 @@ namespace Hooli.Controllers
             return View();
         }
     
+        [Authorize]
         public ActionResult Submit(FormCollection formCollection)
         {
             int software_id_dummy_value = 7;
