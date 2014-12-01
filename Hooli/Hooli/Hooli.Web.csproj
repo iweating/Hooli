@@ -200,6 +200,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActiveSoftwareController.cs" />
+    <Compile Include="Controllers\AddnewCommentController.cs" />
     <Compile Include="Controllers\AddNewSoftwareController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -214,8 +215,10 @@
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\SoftwareModel.cs" />
-    <Compile Include="Views\MySql\DBConnect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\MySql\DBConnect.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -290,6 +293,29 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Manage.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
+    <Content Include="Views\Account\_RemoveExternalLoginsPartial.cshtml" />
+    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
+    <Content Include="Views\ActiveSoftware\Edit.cshtml" />
+    <Content Include="Views\ActiveSoftware\Index.cshtml" />
+    <Content Include="Views\AddnewComment\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\AddNewSoftware\Index.cshtml" />
+    <Content Include="Views\AddNewSoftware\Success.cshtml" />
+    <Content Include="Views\AddNewSoftware\UnauthorizedAccess.cshtml" />
+    <Content Include="Views\Comment\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Index.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -301,25 +327,6 @@
     </Content>
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveExternalLoginsPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Web.config" />
-    <Content Include="Views\ActiveSoftware\Index.cshtml" />
-    <Content Include="Views\AddNewSoftware\Index.cshtml" />
-    <Content Include="Views\Profile\Index.cshtml" />
-    <Content Include="Views\ActiveSoftware\Edit.cshtml" />
-    <Content Include="Views\AddNewSoftware\UnauthorizedAccess.cshtml" />
-    <Content Include="Views\Comment\Index.cshtml" />
-    <Content Include="Views\AddNewSoftware\Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
