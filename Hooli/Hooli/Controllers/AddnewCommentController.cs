@@ -10,7 +10,7 @@ using Hooli.MySql;
 
 namespace Hooli.Controllers
 {
-    public class AddCommentController : Controller
+    public class AddnewCommentController : Controller
     {
         //
         // GET: /AddComment/
