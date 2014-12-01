@@ -61,8 +61,6 @@ namespace Hooli.Controllers
             }
             return View("Success");
         }
-            return View("Index");
-        }
 
     }
 }
