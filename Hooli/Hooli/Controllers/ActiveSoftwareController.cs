@@ -35,7 +35,12 @@ namespace Hooli.Controllers
             Byte[] bytes = (Byte[])dt.Rows[0]["data"];
             string contentType = (string)dt.Rows[0]["contentType"];
             string fileName = (string)dt.Rows[0]["fileName"];
+            string softwareName = (string)dt.Rows[0]["softwareName"];
+            string version = (string)dt.Rows[0]["version"];
             var user = Membership.GetUser();
+            var userID = (int)user.ProviderUserKey;
+            //UpdateDownload(userID.ToString(), softwareName, version, softwareId, version);
+
             return File(bytes, contentType, fileName);
         }
 
@@ -168,6 +173,61 @@ namespace Hooli.Controllers
             }
             IEnumerable<SoftwareModel> model = software;
             return model;
+        }
+
+        public DownloadHistoryModel FillDownloadHistoryModel(MySqlCommand cmd)
+        {
+            DBConnect db = new DBConnect();
+            DownloadHistoryModel download = new DownloadHistoryModel();
+            if (db.GetData(cmd) != null)
+            {
+                foreach (DataRow row in db.GetData(cmd).Rows)
+                {
+                    download.user_id = (int)row["user_id"];
+                    download.softwareName = (string)row["softwareName"];
+                    download.version = (string)row["version"];
+                    download.id = (int)row["id"];
+                    download.download_date = (DateTime)row["download_data"];
+                    download.dl_version = (string)row["dl_version"];
+                }
+            }
+            return download;
+        }
+
+        private void UpdateDownload(string userID, string softwareName, string version, string softID, string dl_version)
+        {
+            DBConnect db = new DBConnect();
+            string query = "select * from Download_history where user_id = @userid and softwareName = @softwareName;";
+
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.AddWithValue("@userid", userID);
+            cmd.Parameters.AddWithValue("@softwareName", softwareName);
+
+            var queryResult = FillDownloadHistoryModel(cmd);
+
+
+            string insert_query = "";
+            if (queryResult == null)
+            {
+                insert_query = "insert into Download_history (user_id, softwareName, version, id, dl_version) values (@user_id, @softwareName, @version, @id, @dl_version);";
+                cmd = new MySqlCommand(insert_query);
+                cmd.Parameters.AddWithValue("@user_id", userID);
+                cmd.Parameters.AddWithValue("@softwareName", softwareName);
+                cmd.Parameters.AddWithValue("@version", version);
+                cmd.Parameters.AddWithValue("@id", softID);
+                cmd.Parameters.AddWithValue("@dl_version", dl_version);
+            }
+            else
+            {
+                insert_query = "update Download_history set version = @version, dl_version = @dl_version where user_id = @userID and softwareName = @softwareName;";
+                cmd = new MySqlCommand(insert_query);
+                cmd.Parameters.AddWithValue("@user_id", userID);
+                cmd.Parameters.AddWithValue("@softwareName", softwareName);
+                cmd.Parameters.AddWithValue("@version", version);
+                cmd.Parameters.AddWithValue("@dl_version", dl_version);
+            }
+
+            db.Update(cmd);
         }
     }
 }

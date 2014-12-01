@@ -9,8 +9,8 @@ namespace Hooli.Models
 {
     public class ProfileModel
     {
-        public int user_id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+
     }
 }

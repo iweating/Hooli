@@ -11,9 +11,8 @@ namespace Hooli.Models
         public string softwareName { get; set; }
         public string version { get; set; }
         public int id { get; set; }
-        public DateTime download_data { get; set; }
+        public DateTime download_date { get; set; }
         public string dl_version { get; set; }
-
 
     }
 }
