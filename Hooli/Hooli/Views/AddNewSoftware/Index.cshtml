@@ -41,6 +41,7 @@
                         <li>
                             @Html.LabelFor(m => m.description)
                             @Html.TextBoxFor(m => m.description)
+                            @Html.ValidationMessageFor(m => m.version)
                         </li>
                     </ol>
                 </fieldset>
