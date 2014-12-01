@@ -36,8 +36,8 @@ namespace Hooli.Controllers
 
             // Average new rating with current software rating
             String current_software_rating_query = "SELECT rating FROM Software where id=" + software_id_dummy_value;
-            MySqlCommand cmd = new MySqlCommand(current_software_rating_query);
-            db.GetData(cmd);
+            MySqlCommand current_software_cmd = new MySqlCommand(current_software_rating_query);
+            db.GetData(current_software_cmd);
 
 
             return View("Index");
