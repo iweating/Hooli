@@ -29,8 +29,10 @@
 
 <body>
     <h2>AddComment</h2>
+
     @using (Html.BeginForm("Submit", "addnewComment", FormMethod.Post))
     {
+        <input type="hidden" value="@ViewBag.id" id="id" name="id" />
         <label class="marginright">
             <textarea name="comment_text" rows="4" placeholder="Enter Comment"></textarea>
         </label>

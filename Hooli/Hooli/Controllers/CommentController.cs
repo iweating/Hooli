@@ -19,6 +19,7 @@ namespace Hooli.Controllers
         {
             DBConnect db = new DBConnect();
             string query = "select * from comments where Software_ID = \"" + RouteData.Values["id"] + "\";";
+            ViewBag.id = RouteData.Values["id"];
             MySqlCommand cmd = new MySqlCommand(query);
             var model = FillCommentModel(cmd);
             return View(model);
