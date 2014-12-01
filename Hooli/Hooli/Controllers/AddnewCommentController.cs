@@ -20,6 +20,7 @@ namespace Hooli.Controllers
             return View();
         }
     
+        [Authorize]
         public ActionResult Submit(FormCollection formCollection)
         {
             String text = formCollection.Get("comment_text"), query;
