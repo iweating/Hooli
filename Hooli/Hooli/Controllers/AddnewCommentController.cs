@@ -24,7 +24,6 @@ namespace Hooli.Controllers
         public ActionResult Submit(FormCollection formCollection)
         {
             int software_id_dummy_value = 17;
-            int rating_dummy_value = 3;
 
             String text = formCollection.Get("comment_text"), query;
             MySqlCommand cmd = new MySqlCommand();
@@ -39,7 +38,8 @@ namespace Hooli.Controllers
             String current_software_rating_query = "SELECT rating FROM Software where id=" + software_id_dummy_value;
             MySqlCommand current_software_rating_cmd = new MySqlCommand(current_software_rating_query);
             int current_rating = (int) db.GetData(current_software_rating_cmd).Rows[0][0];
-            int new_rating = (int) (.75 * current_rating + .25 * rating_dummy_value);
+            int form_rating = Convert.ToInt32(formCollection.Get("rating"));
+            int new_rating = (int) (.75 * current_rating + .25 * form_rating);
             String new_software_rating_query = "INSERT INTO Software (rating) VALUES ('" + new_rating+ "');";
             MySqlCommand new_software_rating_cmd = new MySqlCommand(new_software_rating_query);
             db.Insert(new_software_rating_cmd);
