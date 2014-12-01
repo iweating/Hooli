@@ -93,10 +93,19 @@ namespace Hooli.Controllers
             {
                 try
                 {
-                    Membership.CreateUser(model.UserName, model.Password);
-                    Roles.AddUserToRole(model.UserName, model.Role);
-                    FormsAuthentication.SetAuthCookie(model.UserName, false);
-                    return RedirectToAction("Index", "Home");
+                    MembershipCreateStatus createStatus;
+                    Membership.CreateUser(model.UserName, model.Password,"", "What is the meaning of life?","Nothing", true, null, out createStatus); Roles.AddUserToRole(model.UserName, model.Role);
+
+                    if (createStatus == MembershipCreateStatus.Success)
+                    {
+
+                        FormsAuthentication.SetAuthCookie(model.UserName, false);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                    }
                 }
                 catch
                 {
