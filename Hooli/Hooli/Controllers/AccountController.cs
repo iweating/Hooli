@@ -14,7 +14,6 @@ using Hooli.Models;
 namespace Hooli.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
     public class AccountController : Controller
     {
         //
@@ -35,13 +34,22 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            if (ModelState.IsValid)
             {
-                return RedirectToLocal(returnUrl);
+                try
+                {
+                    Membership.ValidateUser(model.UserName, model.Password);
+                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+
+                    return RedirectToAction("Index", "Home");
+
+                }
+                catch
+                {
+                    ModelState.AddModelError("", "The user name or password is not correct.");
+                }
             }
 
-            // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
             return View(model);
         }
 
@@ -52,7 +60,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            WebSecurity.Logout();
+            FormsAuthentication.SignOut();
 
             return RedirectToAction("Index", "Home");
         }
@@ -76,17 +84,16 @@ namespace Hooli.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    WebSecurity.Login(model.UserName, model.Password);
+                    Membership.CreateUser(model.UserName, model.Password);
                     Roles.AddUserToRole(model.UserName, model.Role);
+                    FormsAuthentication.SetAuthCookie(model.UserName, false);
                     return RedirectToAction("Index", "Home");
                 }
-                catch (MembershipCreateUserException e)
+                catch
                 {
-                    ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
+                    ModelState.AddModelError("", "An Error Occured. Could not successfully add user");
                 }
             }
 
