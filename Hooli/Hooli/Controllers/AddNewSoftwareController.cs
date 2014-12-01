@@ -37,6 +37,13 @@ namespace Hooli.Controllers
            
                 if((file!=null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
                 {
+                    string fileType = file.ContentType;
+                    if (fileType.Contains("application"))
+                    {
+                        ViewBag.Error = "No executable files can be uploaded.";
+                        return View("UnsuccessfulUpload");
+                    }
+
                     BinaryReader br = new BinaryReader(file.InputStream);
                     Byte[] fileBytes = br.ReadBytes(file.ContentLength);
                     br.Close();                    
@@ -57,9 +64,21 @@ namespace Hooli.Controllers
                     //Save data to db
                     DBConnect db = new DBConnect();
                     db.Insert(cmd);
+
+                    return View("Success");
+                }
+                else
+                {
+                    ViewBag.Error = "Error in processing the file.";
+                    return View("UnsuccessfulUpload");
                 }
             }
-            return View("Success");
+            else
+            {
+                ViewBag.Error = "No request was sent.";
+                return View("UnsuccessfulUpload");
+            }
+            
         }
 
     }
