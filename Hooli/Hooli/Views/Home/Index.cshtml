@@ -1,4 +1,7 @@
-﻿@{
+﻿@model IEnumerable<SoftwareModel>
+@using Hooli.Models
+
+@{
     ViewBag.Title = "Home Page";
 }
 Home Page
@@ -12,5 +15,16 @@ Home Page
 
 <!--<h2>Recent Releases</h2>-->
 <!--pull newest 3 software products from DB-->
+<h2>Recent Releases</h2>
+<table>
+    @foreach (SoftwareModel m in Model)
+    {
+        <tr>
+            <td>Software: @m.softwareName</td>
+            <td>Version: @m.version</td>
+            <td>Date: @m.date_added</td>
+        </tr>
+    }
+</table>
 
 <hr />

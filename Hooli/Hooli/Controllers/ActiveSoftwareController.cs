@@ -24,7 +24,7 @@ namespace Hooli.Controllers
             var model = FillSoftwareModel(cmd);
             return View(model);
         }
-       
+
         public FileResult Download()
         {
             DBConnect db = new DBConnect();
@@ -35,7 +35,7 @@ namespace Hooli.Controllers
             Byte[] bytes = (Byte[])dt.Rows[0]["data"];
             string contentType = (string)dt.Rows[0]["contentType"];
             string fileName = (string)dt.Rows[0]["fileName"];
-            UpdateDownloadCount(softwareId, (int)dt.Rows[0]["downloads"]);
+            var user = Membership.GetUser();
             return File(bytes, contentType, fileName);
         }
 
