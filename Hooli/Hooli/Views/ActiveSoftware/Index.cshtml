@@ -6,8 +6,6 @@
     ViewBag.Title = "Index";
 }
 
-<script src="~/Scripts/manageSoftware.js"></script>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -37,6 +35,7 @@
 <table>
     <tr>
         <th>Name</th>
+        <th>Version</th>
         <th>Date Added</th>
         <th>Description</th>
         <th>Download</th>
@@ -49,6 +48,7 @@
     {
         <tr>
             <td>@m.softwareName</td>
+            <td>@m.version</td>
             <td>@m.date_added</td>
             <td>@m.description</td>
             <td>@Html.ActionLink("Download", "Download", "ActiveSoftware", new { id = m.id }, null)</td>

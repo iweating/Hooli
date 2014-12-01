@@ -145,7 +145,7 @@ namespace Hooli.Controllers
             }
         }
 
-        private IEnumerable<SoftwareModel> FillSoftwareModel(MySqlCommand cmd)
+        public IEnumerable<SoftwareModel> FillSoftwareModel(MySqlCommand cmd)
         {
             DBConnect db = new DBConnect();
             List<SoftwareModel> software = new List<SoftwareModel>();

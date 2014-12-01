@@ -30,11 +30,7 @@ namespace Hooli.Controllers
         {
             if(Request != null)
             {
-                //HttpPostedFileBase file = Request.Files["Uploaded File"];
                 HttpPostedFileBase file = model.fileName;
-
-                //Uses User.Identity.Name to find who's logged in-- should be used to find adminId
-                System.Diagnostics.Debug.WriteLine(User.Identity.Name);
            
                 if((file!=null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
                 {
@@ -53,7 +49,7 @@ namespace Hooli.Controllers
                     string query = "insert into Software(admin_id, softwareName, fileName, version, date_added, description, data, contentType) values " + 
                                    "(@adminid, @softwareName, @fileName, @version, @date, @description, @data, @fileContentType);";
                     MySqlCommand cmd = new MySqlCommand(query);
-                    cmd.Parameters.Add("@adminid", MySqlDbType.Int16).Value = 1;
+                    cmd.Parameters.Add("@adminid", MySqlDbType.Int16).Value = (int)Membership.GetUser().ProviderUserKey;
                     cmd.Parameters.Add("@softwareName", MySqlDbType.String).Value = model.softwareName;
                     cmd.Parameters.Add("@fileName", MySqlDbType.String).Value = file.FileName;
                     cmd.Parameters.Add("@version", MySqlDbType.String).Value = model.version;
