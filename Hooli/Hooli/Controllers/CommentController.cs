@@ -54,6 +54,7 @@ namespace Hooli.Controllers
                     {
                         ID = (int)row["ID"],
                         User_ID = (int)row["User_ID"],
+                        User_Name = (String)row["User_Name"],
                         Software_ID = (int)row["Software_ID"],
                         Date = (DateTime)row["Date"],
                         Text = (string)row["Comment"],

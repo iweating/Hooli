@@ -153,7 +153,8 @@ namespace Hooli.Controllers
                         version = (string)row["version"],
                         date_added = (DateTime)row["date_added"],
                         description = (string)row["description"],
-                        downloads = (int)row["downloads"]
+                        downloads = (int)row["downloads"],
+                        rating = (int)row["rating"]
                     });
                 }
             }
