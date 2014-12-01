@@ -52,7 +52,7 @@
             <td>@Html.ActionLink("Delete", "Delete", "ActiveSoftware", new { id = m.id }, new { onclick = "return confirm('Are you sure you want to delete this software?');" })</td>
             <td>@Html.ActionLink("Edit", "Edit", "ActiveSoftware", new { id = m.id }, null)</td>
             <td>@Html.ActionLink("Comment", "Index", "Comment", new {id = m.id }, null)</td>
-            <td>ratingplacehldr</td>
+            <td>@m.rating</td>
             <!--Html.ActionLink(rating)</td>-->
             <!--Is there a way to pass the entire model through an action link??? Maybe do the buttons again...-->
         </tr>

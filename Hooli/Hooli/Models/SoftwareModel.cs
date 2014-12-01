@@ -28,7 +28,7 @@ namespace Hooli.Models
         public string data { get; set; }
         public string contentType { get; set; }
         public int downloads { get; set; }
-
+        public int rating { get; set; }
     }
 
     public class SoftwareContext : DbContext
