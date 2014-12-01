@@ -1,6 +1,7 @@
 ﻿@using Hooli.MySql;
 @using System.Data;
 @using Hooli.Models;
+@using System.Web.Security;
 @model IEnumerable<Hooli.Models.CommentModel>
 @{
     ViewBag.Title = "Index";
@@ -14,7 +15,7 @@
 
 <table width="100%" id="commenttable">
     <tr>
-        <th>@Html.ActionLink("new comment", "Index", "AddComment", new { id = Model.First().Software_ID }, null)</th>
+        <th>@Html.ActionLink("new comment", "Index", "AddnewComment", new { id = Model.First().Software_ID }, null)</th>
         <th>@Html.ActionLink("rate", "rate", "Comment", new { id = Model.First().Software_ID }, null)</th>
         <th class="cellright">sort by</th>
     </tr>
@@ -25,7 +26,7 @@
 
 <table width="100%" id="commenttable" bgcolor="#FFFFF">
 <tr>
-    <th>By: @m.ID</th>
+    <th>By: @m.User_ID</th>
     <td>on: @m.Date</td>
     <td class="cellright">@m.Rating /5</td>
 </tr>

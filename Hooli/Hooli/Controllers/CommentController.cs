@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,30 +18,37 @@ namespace Hooli.Controllers
         public ActionResult Index()
         {
             DBConnect db = new DBConnect();
-            string query = "select * from comments";
+            string query = "select * from comments where Software_ID = \"" + RouteData.Values["id"] + "\";";
             MySqlCommand cmd = new MySqlCommand(query);
             var model = FillCommentModel(cmd);
             return View(model);
         }
 
-       
-        public ActionResult Open()
+        public ActionResult add()
         {
-            DBConnect db = new DBConnect();
-            string softwareId = (string)RouteData.Values["id"];
-            string query = "select * from Comments where softwareId = " + softwareId + ";";
+            string query = "select * from comments where id = \"" + RouteData.Values["id"] + "\";";
             MySqlCommand cmd = new MySqlCommand(query);
-            DataTable dt = db.GetData(cmd);
             var model = FillCommentModel(cmd);
-            return View(model);
+            return View();
         }
+
+        public ActionResult rate()
+        {
+            return View();
+        }
+
+        public ActionResult sort(FormCollection formCollection)
+        {
+            return View();
+        }
+
         private IEnumerable<CommentModel> FillCommentModel(MySqlCommand cmd)
         {
             DBConnect db = new DBConnect();
             List<CommentModel> comments = new List<CommentModel>();
-            if(db.GetData(cmd) != null)
+            if (db.GetData(cmd) != null)
             {
-                foreach(DataRow row in db.GetData(cmd).Rows)
+                foreach (DataRow row in db.GetData(cmd).Rows)
                 {
                     comments.Add(new CommentModel()
                     {
@@ -49,7 +56,8 @@ namespace Hooli.Controllers
                         User_ID = (int)row["User_ID"],
                         Software_ID = (int)row["Software_ID"],
                         Date = (DateTime)row["Date"],
-                        Text = (string)row["Comment"]
+                        Text = (string)row["Comment"],
+                        Rating = (int)row["Rating"]
                     });
                 }
             }
