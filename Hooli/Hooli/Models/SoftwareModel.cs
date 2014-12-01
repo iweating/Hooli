@@ -24,6 +24,7 @@ namespace Hooli.Models
         public string version { get; set; }
         public DateTime date_added { get; set; }
         [Display(Name = "Description")]
+        [Required(ErrorMessage="A description is required")]
         public string description { get; set; }
         public string data { get; set; }
         public string contentType { get; set; }

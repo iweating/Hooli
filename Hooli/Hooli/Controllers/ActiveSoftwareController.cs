@@ -7,6 +7,7 @@ using System.Data;
 using MySql.Data.MySqlClient;
 using Hooli.Models;
 using Hooli.MySql;
+using System.Web.Security;
 
 namespace Hooli.Controllers
 {
@@ -48,32 +49,39 @@ namespace Hooli.Controllers
             db.Update(cmd);
         }
 
-        //Need to have alert saying "Are you sure??" 
+        [Authorize(Roles = "Admin")] 
         public ActionResult Delete()
         {
-//Page.ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('Are you sure?');", true);
+            if (Roles.IsUserInRole("Admin"))
+            {
+                string query = "Delete from Software where id = @softwareId";
+                MySqlCommand cmd = new MySqlCommand(query);
+                cmd.Parameters.Add("@softwareId", MySqlDbType.String).Value = (string)RouteData.Values["id"];
 
-            string query = "Delete from Software where id = @softwareId";
-            MySqlCommand cmd = new MySqlCommand(query);
-            cmd.Parameters.Add("@softwareId", MySqlDbType.String).Value = (string)RouteData.Values["id"];
+                DBConnect db = new DBConnect();
+                db.Delete(cmd);
 
-            DBConnect db = new DBConnect();
-            db.Delete(cmd);
+                query = "select * from Software";
+                cmd.CommandText = query;
+                var model = FillSoftwareModel(cmd);
 
-            query = "select * from Software";
-            cmd.CommandText = query;
-            var model = FillSoftwareModel(cmd);
-
-            return View("Index", model);
+                return View("Index", model);
+            }
+            return View("UnauthorizedAccess", "AddNewSoftware");
         }
 
+        [Authorize(Roles = "Admin")] 
         public ActionResult Edit()
         {
-            string query = "select * from Software where id = \"" + RouteData.Values["id"] + "\";";
-            MySqlCommand cmd = new MySqlCommand(query);
-            var model = FillSoftwareModel(cmd);
-            if (model.Count() != 0) return View(model.ElementAt(0));
-            else return View("Error");
+            if (Roles.IsUserInRole("Admin"))
+            {
+                string query = "select * from Software where id = \"" + RouteData.Values["id"] + "\";";
+                MySqlCommand cmd = new MySqlCommand(query);
+                var model = FillSoftwareModel(cmd);
+                if (model.Count() != 0) return View(model.ElementAt(0));
+                else return View("Error");
+            }
+            return View("UnauthorizedAccess", "AddNewSoftware");
         }
 
         public ActionResult Update(SoftwareModel model)
@@ -137,7 +145,7 @@ namespace Hooli.Controllers
             }
         }
 
-        private IEnumerable<SoftwareModel> FillSoftwareModel(MySqlCommand cmd)
+        public IEnumerable<SoftwareModel> FillSoftwareModel(MySqlCommand cmd)
         {
             DBConnect db = new DBConnect();
             List<SoftwareModel> software = new List<SoftwareModel>();

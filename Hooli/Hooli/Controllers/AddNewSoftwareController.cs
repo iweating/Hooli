@@ -7,6 +7,7 @@ using System.IO;
 using MySql.Data.MySqlClient;
 using Hooli.Models;
 using Hooli.MySql;
+using System.Web.Security;
 
 namespace Hooli.Controllers
 {
@@ -15,28 +16,31 @@ namespace Hooli.Controllers
         //
         // GET: /AddNewSoftware/
 
-        //[Authorize(Roles="Admin")]
+        [Authorize(Roles="Admin")]
         public ActionResult Index()
         {
-            //if (Roles.IsUserInRole("Admin"))
-            //{
+            if (Roles.IsUserInRole("Admin"))
+            {
                 return View();
-            //}
-            //return View("UnauthorizedAccess");
+            }
+            return View("UnauthorizedAccess");
         }
-        //[Authorize(Roles="Admin")]
+        [Authorize(Roles="Admin")]
         public ActionResult Save(FormCollection formCollection, SoftwareModel model)
         {
             if(Request != null)
             {
-                //HttpPostedFileBase file = Request.Files["Uploaded File"];
                 HttpPostedFileBase file = model.fileName;
-
-                //Uses User.Identity.Name to find who's logged in-- should be used to find adminId
-                System.Diagnostics.Debug.WriteLine(User.Identity.Name);
            
                 if((file!=null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
                 {
+                    string fileType = file.ContentType;
+                    if (fileType.Contains("application"))
+                    {
+                        ViewBag.Error = "No executable files can be uploaded.";
+                        return View("UnsuccessfulUpload");
+                    }
+
                     BinaryReader br = new BinaryReader(file.InputStream);
                     Byte[] fileBytes = br.ReadBytes(file.ContentLength);
                     br.Close();                    
@@ -45,7 +49,7 @@ namespace Hooli.Controllers
                     string query = "insert into Software(admin_id, softwareName, fileName, version, date_added, description, data, contentType) values " + 
                                    "(@adminid, @softwareName, @fileName, @version, @date, @description, @data, @fileContentType);";
                     MySqlCommand cmd = new MySqlCommand(query);
-                    cmd.Parameters.Add("@adminid", MySqlDbType.Int16).Value = 1;
+                    cmd.Parameters.Add("@adminid", MySqlDbType.Int16).Value = (int)Membership.GetUser().ProviderUserKey;
                     cmd.Parameters.Add("@softwareName", MySqlDbType.String).Value = model.softwareName;
                     cmd.Parameters.Add("@fileName", MySqlDbType.String).Value = file.FileName;
                     cmd.Parameters.Add("@version", MySqlDbType.String).Value = model.version;
@@ -57,9 +61,21 @@ namespace Hooli.Controllers
                     //Save data to db
                     DBConnect db = new DBConnect();
                     db.Insert(cmd);
+
+                    return View("Success");
+                }
+                else
+                {
+                    ViewBag.Error = "Error in processing the file.";
+                    return View("UnsuccessfulUpload");
                 }
             }
-            return View("Success");
+            else
+            {
+                ViewBag.Error = "No request was sent.";
+                return View("UnsuccessfulUpload");
+            }
+            
         }
 
     }
