@@ -40,8 +40,15 @@ namespace Hooli.Controllers
                 {
                     Membership.ValidateUser(model.UserName, model.Password);
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-
-                    return RedirectToAction("Index", "Home");
+                    if (returnUrl == null)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    
 
                 }
                 catch
